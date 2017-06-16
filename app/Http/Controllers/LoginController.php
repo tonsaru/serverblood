@@ -14,7 +14,7 @@ class LoginController extends Controller
     public function login(){
         $check = Input::only('name','password');
         if(Auth::attempt($check)){
-          echo 'login success';
+          return $check;
         }else{
           echo "login fail";
         }

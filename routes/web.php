@@ -18,4 +18,4 @@ Route::get('/', function () {
 
 Route::resource('member','MemberController');
 
-Route::post('login','LoginController@login');
+Route::post('show','LoginController@login');

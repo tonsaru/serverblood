@@ -17,5 +17,10 @@ Route::get('/', function () {
 
 
 Route::resource('member','MemberController');
+Route::resource('test','TestController');
+
+Route::get('token',function(){
+    return csrf_token();
+});
 
 Route::post('show','LoginController@login');

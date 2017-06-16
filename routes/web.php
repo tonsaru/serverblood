@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::resource('member','MemberController');
+
+Route::post('login','LoginController@login');

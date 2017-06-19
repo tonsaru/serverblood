@@ -18,6 +18,12 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('blood');
+            $table->string('birthyear');
+            $table->string('phone');
+            $table->string('province');
+            $table->string('countdonate');
+            $table->string('img');
             $table->rememberToken();
             $table->timestamps();
         });

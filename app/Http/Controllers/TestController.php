@@ -34,7 +34,13 @@ class TestController extends Controller
      */
     public function store(Request $request)
     {
-        return "store โว้ยย";
+        if($request){
+            if($request->name == 'ggg' && $request->password == '123456'){
+                return "login suc";
+            }else {
+                return "login fail";
+            }
+        }
     }
 
     /**

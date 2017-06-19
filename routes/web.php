@@ -24,3 +24,5 @@ Route::get('token',function(){
 });
 
 Route::post('show','LoginController@login');
+
+Route::post('member/login','LoginController@login');

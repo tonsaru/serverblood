@@ -13,11 +13,7 @@ class TestController extends Controller
      */
     public function index()
     {
-        $a1 = array(
-            'name' => 'Jack',
-       );
-
-       return json_encode($a1);
+        return "index จ้า";
     }
 
     /**
@@ -38,11 +34,7 @@ class TestController extends Controller
      */
     public function store(Request $request)
     {
-         $a1 = array(
-             'name' => 'Jack',
-        );
-
-        return json_encode($a1);
+        return "store โว้ยย";
     }
 
     /**

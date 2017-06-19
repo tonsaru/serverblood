@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Member;
 use App\User;
+
 
 class MemberController extends Controller
 {
@@ -76,9 +76,14 @@ class MemberController extends Controller
         $member->name = $request->name;
         $member->email = $request->email;
         $member->password = bcrypt($request->password);
+        $member->blood = $request->blood;
+        $member->birthyear = $request->birthyear;
+        $member->phone = $request->phone;
+        $member->province = $request->province;
+        $member->countdonate = $request->countdonate;
         $member->save();
 
-        return redirect('member');
+        return "อะ สมัครให้ละ";
     }
 
     /**

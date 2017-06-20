@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Friend;
-use Illuminate\Support\Facades\Auth;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 class FriendController extends Controller
 {
     /**
@@ -37,7 +38,19 @@ class FriendController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user()){
+            $id = Auth::user()->id;
+            if(count(DB::select('SELECT friends.user_id,friends.friend_id,users.name,users.phone,users.countdonate FROM `friends`,`users` WHERE (users.id = friends.friend_id) && (user_id = :id) && ( friends.friend_id = :friend_id)', ['id' => $id,'friend_id' => $request->friend_id]))>0){
+                return "You've already added this account";
+            }
 
+            $friend = new Friend;
+            $friend->user_id = Auth::user()->id;
+            $friend->friend_id = $request->friend_id;
+            $friend->save();
+
+            return "Add Friend Success";
+        }
     }
 
     /**

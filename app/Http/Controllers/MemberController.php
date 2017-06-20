@@ -62,16 +62,6 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        // $member = new Member;
-        // $member->name = $request->name;
-        // $member->email = $request->email;
-        // $member->password = bcrypt($request->password);
-        // $member->blood = $request->blood;
-        // $member->birthyear = $request->birthyear;
-        // $member->phone = $request->phone;
-        // $member->province = $request->province;
-        // $member->countdonate = $request->countdonate;
-
         $member = new User;
         $member->name = $request->name;
         $member->email = $request->email;
@@ -83,7 +73,7 @@ class MemberController extends Controller
         $member->countdonate = $request->countdonate;
         $member->save();
 
-        return "อะ สมัครให้ละ";
+        return "Register Success";
     }
 
     /**

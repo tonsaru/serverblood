@@ -15,15 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::resource('member','MemberController');
 Route::resource('test','TestController');
 
 Route::get('token',function(){
     return csrf_token();
 });
 
-Route::post('show','LoginController@login');
+Route::post('login','LoginController@login');
+Route::post('register','MemberController@store');
+Route::get('logout','LoginController@logout');
 
-Route::post('member/login','LoginController@login');
-Route::post('member/reg','MemberController@store');
+Route::resource('friend', 'FriendController');

@@ -26,3 +26,4 @@ Route::post('register','MemberController@store');
 Route::get('logout','LoginController@logout');
 
 Route::resource('friend', 'FriendController');
+Route::resource('roomreq','RoomreqController');

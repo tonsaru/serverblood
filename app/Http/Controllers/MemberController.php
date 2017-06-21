@@ -33,10 +33,10 @@ class MemberController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => 'required|string|max:255',
+            'username' => 'required|string|max:255|Alpha',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'blood' => 'required|string|max:1',
+            'blood' => 'required|string|max:2',
             'birthyear' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'province' => 'required|string|max:255',
@@ -62,6 +62,12 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|string|max:255|Alpha',
+            'blood' => 'required|string|max:2',
+            'phone' => 'required|string|max:255',
+        ]);
+
         $member = new User;
         $member->name = $request->name;
         $member->email = $request->email;
@@ -71,6 +77,7 @@ class MemberController extends Controller
         $member->phone = $request->phone;
         $member->province = $request->province;
         $member->countdonate = $request->countdonate;
+        $member->last_date_donate = $request->last_date_donate;
         $member->save();
 
         return "Register Success";

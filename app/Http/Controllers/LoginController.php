@@ -16,38 +16,31 @@ use App\User;
 class LoginController extends Controller
 {
     public function login(Request $request)
-      {
-                //   if($request){
-        $check = $request->only(['name', 'password']);
-        if(Auth::attempt($check)){
+    {
+        //เช็คว่ามีการ login อยู่รึเปล่า
+        if(Auth::user()){
+          return "Please Logout !!!";
+        }
+
+        //เช็ค login 
+        if (Auth::attempt(['name' => $request->name, 'password' => $request->password])){
             $username = strtolower($request->name);
             $user = User::where('name', '=', $username)->first();
             Auth::login($user);
 
             //มีไม่มีก็ได้แสดงค่าออกมาดูเฉยๆ
             return Auth::user();
+        }elseif (Auth::attempt(['phone'=> $request->name, 'password' => $request->password])) {
+            $phone = strtolower($request->name);
+            $user = User::where('phone', '=', $phone)->first();
+            Auth::login($user);
+            return Auth::user();
         }else{
             return "login fail";
         }
+    }
 
-                // if(Auth::attempt($check)){
-                                            // $user = Auth::user()->id;
-                                            // Auth::login($check);
-                //   return Auth::user();
-                                            //   $user = DB::table('members')->where(['name', $request->name],['password',$request->password]);
-                                            //   return $user;
-                // }else{
-                //   return "login fail";
-                // }
-                                              // if($request->name == 'ggg' && $request->password == '123456'){
-                                              //     return "login suc";
-                                              // }else {
-                                              //     return "login fail";
-                                              // }
-        //   }
-      }
-
-      public function logout(){
+    public function logout(){
         Auth::logout();
-      }
+    }
 }

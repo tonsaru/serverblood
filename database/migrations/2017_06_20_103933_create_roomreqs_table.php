@@ -23,6 +23,7 @@ class CreateRoomreqsTable extends Migration
             $table->string('patient_id');
             $table->string('patient_name');
             $table->string('patient_blood');
+            $table->string('patient_blood_type')->default('positive');
             $table->string('patient_detail');
             $table->string('patient_hos');
             $table->integer('countblood');

@@ -38,7 +38,23 @@ class RoomreqController extends Controller
      */
     public function store(Request $request)
     {
-        $req = new Roomreq;
+        if(Auth::user()){
+            $req = new Roomreq;
+            $req->user_id = Auth::user()->id;
+            $req->patient_id = $request->patient_id;
+            $req->patient_name = $request->patient_name;
+            $req->patient_blood = $request->patient_blood;
+            $req->patient_blood_type = $request->patient_blood_type;
+            $req->patient_detail = $request->patient_detail;
+            $req->patient_hos = $request->patient_hos;
+            $req->countblood = $request->countblood;
+            $req->save();
+        }else{
+            return "Login Please !!";
+        }
+
+
+        return "Request Success";
     }
 
     /**

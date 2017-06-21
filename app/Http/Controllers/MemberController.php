@@ -66,13 +66,14 @@ class MemberController extends Controller
             'name' => 'required|string|max:255|Alpha',
             'blood' => 'required|string|max:2',
             'phone' => 'required|string|max:255',
-        ]);
+        ]);//alpha คือตัวหนังสือ
 
         $member = new User;
         $member->name = $request->name;
         $member->email = $request->email;
         $member->password = bcrypt($request->password);
         $member->blood = $request->blood;
+        $member->blood_type = $request->blood_type;
         $member->birthyear = $request->birthyear;
         $member->phone = $request->phone;
         $member->province = $request->province;

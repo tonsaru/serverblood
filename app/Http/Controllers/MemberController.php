@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class MemberController extends Controller
 {
@@ -67,11 +68,31 @@ class MemberController extends Controller
             return "Logout please";
         }
 
-        $this->validate($request, [
-            'name' => 'required|string|max:255|Alpha',
+        // $this->validate($request, [
+        //     'name' => 'required|string|max:255|Alpha',
+        //     'blood' => 'required|string|max:2',
+        //     'phone' => 'required|string|max:255',
+        // ]);//alpha คือตัวหนังสือ
+
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:191|Alpha|unique:users',
             'blood' => 'required|string|max:2',
             'phone' => 'required|string|max:255',
-        ]);//alpha คือตัวหนังสือ
+
+            'email' => 'required|string|email|max:191|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            'blood' => 'required|string|max:2',
+            'blood_type' => 'required|string|max:8',
+            'birthyear' => 'required|integer|max:3000',
+            'phone' => 'required|string|max:10|unique:users',
+            'province' => 'required|string|max:255',
+            'password_confirmation' => 'required|string|min:6',
+       ]);
+
+       if ($validator->fails()) {
+           return $validator->errors()->toArray();
+       }
 
         $member = new User;
         $member->name = $request->name;

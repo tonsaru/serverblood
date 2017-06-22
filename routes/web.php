@@ -27,3 +27,7 @@ Route::get('logout','LoginController@logout');
 
 Route::resource('friend', 'FriendController');
 Route::resource('request','RoomreqController');
+/////////////////////////////////////////
+Route::get('tete',function(){
+  return view('login/form');
+});

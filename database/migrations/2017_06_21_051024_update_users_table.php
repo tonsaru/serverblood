@@ -14,6 +14,7 @@ class UpdateUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+                $table->string('blood_type',8)->default('positive');
                 $table->timestamp('last_date_donate')->default(\DB::raw('CURRENT_TIMESTAMP'));
             });
     }

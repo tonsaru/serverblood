@@ -22,8 +22,11 @@ Route::get('token',function(){
 });
 
 Route::post('login','LoginController@login');
-Route::post('register','MemberController@store');
 Route::get('logout','LoginController@logout');
+Route::post('register','MemberController@store');
+Route::get('profile','MemberController@show');
+Route::put('edit','MemberController@update');
+
 
 Route::resource('friend', 'FriendController');
 Route::resource('request','RoomreqController');

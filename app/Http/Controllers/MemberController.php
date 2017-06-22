@@ -34,16 +34,7 @@ class MemberController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'username' => 'required|string|max:255|Alpha',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-            'blood' => 'required|string|max:2',
-            'birthyear' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
-            'province' => 'required|string|max:255',
-            'countdonate' => 'required|integer|max:255',
-        ]);
+
     }
 
     /**
@@ -65,7 +56,7 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         if(Auth::user()){
-            return "Logout please";
+            return "Logout please 1";
         }
 
         // $this->validate($request, [
@@ -79,7 +70,6 @@ class MemberController extends Controller
             'name' => 'required|string|max:191|Alpha|unique:users',
             'blood' => 'required|string|max:2',
             'phone' => 'required|string|max:255',
-
             'email' => 'required|string|email|max:191|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'blood' => 'required|string|max:2',
@@ -91,7 +81,12 @@ class MemberController extends Controller
        ]);
 
        if ($validator->fails()) {
-           return $validator->errors()->toArray();
+        //    return $validator->errors()->toArray();
+            return $validator->messages();
+            // return $validator->errors()->all();
+
+       }else{
+
        }
 
         $member = new User;
@@ -115,9 +110,17 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        if(Auth::user()){
+            $user = DB::table('users')->select('img','name', 'email','phone','blood','blood_type','birthyear','last_date_donate')->where('id', Auth::user()->id)->get();
+
+            // return Response::json($user);
+            return $user->all();
+
+        }else{
+            return "Login pls 3";
+        }
     }
 
     /**
@@ -128,7 +131,7 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -138,9 +141,37 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        if(Auth::user()){
+            // validate
+            // read more on validation at http://laravel.com/docs/validation
+            $rules = array(
+                'phone' => 'string|max:255',
+                'email' => 'string|email|max:191',
+                'blood' => 'string|max:2',
+                'birthyear' => 'integer|max:3000',
+                'blood_type' => 'string|max:8',
+            );
+            $validator = Validator::make($request->all(), $rules);
+
+            // process the login
+            if ($validator->fails()) {
+                return $validator->errors()->toArray();
+            }else {
+                // store
+                $update = User::find(Auth::user()->id);
+                $update->email = $request->email;
+                $update->blood = $request->blood;
+                $update->blood_type = $request->blood_type;
+                $update->phone = $request->phone;
+                $update->save();
+
+                return "Update Success";
+            }
+        }else{
+            return "Login plz 2";
+        }
     }
 
     /**

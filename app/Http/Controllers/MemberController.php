@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {
@@ -62,6 +63,10 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user()){
+            return "Logout please";
+        }
+
         $this->validate($request, [
             'name' => 'required|string|max:255|Alpha',
             'blood' => 'required|string|max:2',
@@ -77,7 +82,6 @@ class MemberController extends Controller
         $member->birthyear = $request->birthyear;
         $member->phone = $request->phone;
         $member->province = $request->province;
-        $member->countdonate = $request->countdonate;
         $member->last_date_donate = $request->last_date_donate;
         $member->save();
 

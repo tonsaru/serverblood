@@ -26,6 +26,7 @@ Route::get('logout','LoginController@logout');
 
 Route::get('showdonate','MemberController@showDonate');
 Route::get('profile','MemberController@show');
+Route::post('checkregis','MemberController@checkregis');
 Route::post('register','MemberController@store');
 Route::put('edit','MemberController@update');
 

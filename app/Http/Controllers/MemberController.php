@@ -113,16 +113,14 @@ class MemberController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+     * @return \Illuminate\Http\Response     */
     public function show()
     {
         if(Auth::user()){
-            $user = DB::table('users')->select('img','name', 'email','phone','blood','blood_type','birthyear','last_date_donate')->where('id', Auth::user()->id)->get();
+            $user = DB::table('users')->select('img','name', 'email','phone','blood','blood_type','status')->where('id', Auth::user()->id)->get();
 
             // return Response::json($user);
             return $user;
-
         }else{
             return "Login pls 3";
         }
@@ -188,5 +186,10 @@ class MemberController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showDonate(){
+      $dona = DB::table('roomdonates')->select('id','roomreq_id','user_id','status')->where('user_id',Auth::user()->id)->get();
+          return $dona;
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class RoomreqController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +48,9 @@ class RoomreqController extends Controller
             $req->patient_blood_type = $request->patient_blood_type;
             $req->patient_detail = $request->patient_detail;
             $req->patient_hos = $request->patient_hos;
+            $req->patient_province = $request->patient_province;
             $req->countblood = $request->countblood;
+
             $req->save();
         }else{
             return "Login Please !!";
@@ -57,9 +60,15 @@ class RoomreqController extends Controller
         return "Request Success";
     }
 
-    //input room_id
+    //input roomreq_id
     public function refresh(Request $request){
-        $update = Roomreq::find($request->id);
+
+        //เช็คว่า roomreq_id ที่เข้าเป็นของเรารึเปล่า
+        $update = Roomreq::find($request->roomreq_id);
+        if($update->user_id != Auth::user()->id){
+            return "not enter";
+        }
+
         $update->count_refresh =$update->count_refresh+1;
         $update->save();
 
@@ -71,9 +80,28 @@ class RoomreqController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+
+    //  input roomreqID
+    public function show(Request $request)
     {
-        //
+        //check ว่าเข้าได้เฉพาะของที่ตัวเองมี
+        $req = DB::table('roomreqs')->where([
+                ['id',$request->roomreq_id],
+                ['user_id',Auth::user()->id]
+            ])->get();
+
+        if($req->count() == 0){
+            return 'no data';
+        }
+
+        return $req;
+    }
+
+    //แสดง req ทั้งหมดของ user ที่ login
+    public function showreqall(){
+        $req = DB::table('roomreqs')->select('user_id','id','created_at','patient_name','patient_hos','patient_blood','patient_blood_type','patient_status')->where('user_id',Auth::user()->id)->get();
+
+        return $req;
     }
 
     /**
@@ -108,5 +136,40 @@ class RoomreqController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // input roomreqID
+    public function thankyou(Request $request){
+        $update = Roomreq::find($request->roomreq_id);
+        if($update->user_id == Auth::user()->id){
+            if($update->patient_status == 'complete'){
+                $update->patient_thankyou = $request->thankyou;
+                $update->save();
+
+                return "Thank you for thanks";
+            }else{
+                return "Status is not complete";
+            }
+        }else{
+            return "not enter";
+        }
+    }
+
+    public function status_suc(Request $request){
+        $update = Roomreq::find($request->roomreq_id);
+        if($update->user_id == Auth::user()->id){
+            if($update->patient_status == 'complete'){
+                return "Status complete already";
+            }else{
+                $update->patient_status = 'complete';
+                $update->save();
+                return "Status RoomreqID : ".$update->id." is ".$update->patient_status;
+            }
+
+
+
+        }else{
+            return "Roomreq is not you ID";
+        }
     }
 }

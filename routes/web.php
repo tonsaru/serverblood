@@ -23,13 +23,21 @@ Route::get('token',function(){
 
 Route::post('login','LoginController@login');
 Route::get('logout','LoginController@logout');
-Route::post('register','MemberController@store');
+
+Route::get('showdonate','MemberController@showDonate');
 Route::get('profile','MemberController@show');
+Route::post('register','MemberController@store');
 Route::put('edit','MemberController@update');
 
 Route::post('refresh','RoomreqController@refresh');
 
+Route::resource('donate','RoomdonateController');
 Route::resource('friend', 'FriendController');
+
+Route::get('showreqall','RoomreqController@showreqall');
+Route::put('thankyou','RoomreqController@thankyou');
+Route::post('status_suc','RoomreqController@status_suc');
+Route::post('detailreq','RoomreqController@show');
 Route::resource('request','RoomreqController');
 /////////////////////////////////////////
 Route::get('tete',function(){

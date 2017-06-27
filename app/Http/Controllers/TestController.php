@@ -87,4 +87,9 @@ class TestController extends Controller
     {
         //
     }
+
+    public function ajax(){
+         $msg = "This is a simple message.";
+         return response()->json(array('msg'=> $msg));
+    }
 }

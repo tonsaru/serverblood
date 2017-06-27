@@ -69,7 +69,6 @@ class MemberController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:191|Alpha|unique:users',
             'blood' => 'required|string|max:2',
-            'phone' => 'required|string|max:255',
             'email' => 'required|string|email|max:191|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'blood' => 'required|string|max:2',
@@ -78,6 +77,8 @@ class MemberController extends Controller
             'phone' => 'required|string|max:10|unique:users',
             'province' => 'required|string|max:255',
             'password_confirmation' => 'required|string|min:6',
+            'real_name' => 'required|string|Alpha',
+            'real_surname' => 'required|string|Alpha',
        ]);
 
        if ($validator->fails()) {
@@ -99,7 +100,11 @@ class MemberController extends Controller
         $member->phone = $request->phone;
         $member->province = $request->province;
         $member->last_date_donate = $request->last_date_donate;
+        $member->real_name = $request->real_name;
+        $member->real_surname = $request->real_surname;
         $member->save();
+
+        Auth::login($member);
 
         return "Register Success";
     }
@@ -116,7 +121,7 @@ class MemberController extends Controller
             $user = DB::table('users')->select('img','name', 'email','phone','blood','blood_type','birthyear','last_date_donate')->where('id', Auth::user()->id)->get();
 
             // return Response::json($user);
-            return $user->all();
+            return $user;
 
         }else{
             return "Login pls 3";

@@ -27,10 +27,16 @@ Route::post('register','MemberController@store');
 Route::get('profile','MemberController@show');
 Route::put('edit','MemberController@update');
 
+Route::post('refresh','RoomreqController@refresh');
 
 Route::resource('friend', 'FriendController');
 Route::resource('request','RoomreqController');
 /////////////////////////////////////////
 Route::get('tete',function(){
   return view('login/form');
+});
+
+Route::post('/getmsg','TestController@ajax');
+Route::get('testajax1',function(){
+  return view('testAjax');
 });

@@ -44,11 +44,10 @@ class RoomreqController extends Controller
             $req->patient_id = $request->patient_id;
             $req->patient_name = $request->patient_name;
             $req->patient_blood = $request->patient_blood;
-            $req->patient_blood_typ = $request->patient_blood;
+            $req->patient_blood_type = $request->patient_blood_type;
             $req->patient_detail = $request->patient_detail;
             $req->patient_hos = $request->patient_hos;
             $req->countblood = $request->countblood;
-            $req->patient_status = $request->patient_status;
             $req->save();
         }else{
             return "Login Please !!";
@@ -58,6 +57,14 @@ class RoomreqController extends Controller
         return "Request Success";
     }
 
+    //input room_id
+    public function refresh(Request $request){
+        $update = Roomreq::find($request->id);
+        $update->count_refresh =$update->count_refresh+1;
+        $update->save();
+
+        return "Refresh Succesful  <br />UserID: ".$update->user_id."<br />RoomID : ".$update->id."<br />CountRefresh = ".$update->count_refresh;
+    }
     /**
      * Display the specified resource.
      *

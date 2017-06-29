@@ -22,9 +22,10 @@ class CreateUsersTable extends Migration
             $table->string('birthyear');
             $table->string('phone')->unique();
             $table->string('province');
-            $table->string('countdonate');
+            $table->integer('countdonate')->default(0);
             $table->string('img');
             $table->rememberToken();
+            $table->timestamps();
         });
     }
 

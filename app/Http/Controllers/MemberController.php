@@ -105,7 +105,7 @@ class MemberController extends Controller
        }
 
         $member = new User;
-        $member->name = $request->name;
+        $member->name = strtolower($request->name);
         $member->email = $request->email;
         $member->password = bcrypt($request->password);
         $member->blood = $request->blood;

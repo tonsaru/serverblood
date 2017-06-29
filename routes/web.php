@@ -21,25 +21,26 @@ Route::get('token',function(){
     return csrf_token();
 });
 
-Route::post('login','LoginController@login');
-Route::get('logout','LoginController@logout');
 
-Route::get('showdonate','MemberController@showDonate');
+Route::get('logout','LoginController@logout');
+Route::post('login','LoginController@login');
+
 Route::get('profile','MemberController@show');
+Route::get('showdonate','MemberController@showDonate');
 Route::post('checkregis','MemberController@checkregis');
 Route::post('register','MemberController@store');
 Route::put('edit','MemberController@update');
 
+Route::get('showreqall','RoomreqController@showreqall');
+Route::post('detailreq','RoomreqController@show');
 Route::post('refresh','RoomreqController@refresh');
+Route::post('status_suc','RoomreqController@status_suc');
+Route::put('thankyou','RoomreqController@thankyou');
 
 Route::resource('donate','RoomdonateController');
 Route::resource('friend', 'FriendController');
-
-Route::get('showreqall','RoomreqController@showreqall');
-Route::put('thankyou','RoomreqController@thankyou');
-Route::post('status_suc','RoomreqController@status_suc');
-Route::post('detailreq','RoomreqController@show');
 Route::resource('request','RoomreqController');
+
 /////////////////////////////////////////
 Route::get('tete',function(){
   return view('login/form');

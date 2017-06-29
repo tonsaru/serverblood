@@ -131,7 +131,7 @@ class MemberController extends Controller
     public function show()
     {
         if(Auth::user()){
-            $user = DB::table('users')->select('img','name', 'email','phone','blood','blood_type','status')->where('id', Auth::user()->id)->get();
+            $user = DB::table('users')->select('img','name', 'email','phone','blood','blood_type','status','real_name','real_surname')->where('id', Auth::user()->id)->get();
 
             // return Response::json($user);
             return $user;

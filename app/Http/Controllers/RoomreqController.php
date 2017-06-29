@@ -47,9 +47,11 @@ class RoomreqController extends Controller
             $req->patient_blood = $request->patient_blood;
             $req->patient_blood_type = $request->patient_blood_type;
             $req->patient_detail = $request->patient_detail;
-            $req->patient_hos = $request->patient_hos;
             $req->patient_province = $request->patient_province;
             $req->countblood = $request->countblood;
+            $req->patient_hos = $request->patient_hos;
+            $req->patient_hos_la = $request->patient_la;
+            $req->patient_hos_long = $request->patient_long;
 
             $req->save();
         }else{
